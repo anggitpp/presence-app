@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../repositories/repositories.dart';
+import '../../repositories/add_employee_repository.dart';
 import '/models/custom_error.dart';
 
 part 'add_employee_event.dart';

@@ -1,4 +1,5 @@
 class Routes {
-  static const home = "/";
-  static const addEmployee = "add_employee";
+  static const home = '/';
+  static const login = '/login';
+  static const addEmployee = 'add_employee';
 }

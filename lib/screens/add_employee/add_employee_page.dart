@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presence_app/utils/error_dialog.dart';
 import 'package:validators/validators.dart';
 
-import '../bloc/add_employee_bloc.dart';
+import '../../blocs/add_employee/add_employee_bloc.dart';
 
 class AddEmployeePage extends StatefulWidget {
   const AddEmployeePage({Key? key}) : super(key: key);
