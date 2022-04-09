@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:presence_app/repositories/login_repository.dart';
 import 'blocs/blocs.dart';
 import 'firebase_options.dart';
 
@@ -11,9 +12,9 @@ import 'repositories/repositories.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 //LIST SCREEN/PAGE/WIDGETS
-import 'screens/login/views/login_page.dart';
 import 'screens/add_employee/add_employee.dart';
 import 'screens/home/home_page.dart';
+import 'screens/login/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,12 @@ class MyApp extends StatelessWidget {
             firebaseAuth: FirebaseAuth.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (context) => LoginRepository(
+            firebaseFirestore: FirebaseFirestore.instance,
+            firebaseAuth: FirebaseAuth.instance,
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -43,7 +50,12 @@ class MyApp extends StatelessWidget {
             create: (context) => AddEmployeeBloc(
               addEmployeRepository: context.read<AddEmployeRepository>(),
             ),
-          )
+          ),
+          BlocProvider<LoginBloc>(
+            create: (context) => LoginBloc(
+              loginRepository: context.read<LoginRepository>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           title: 'Presence App',

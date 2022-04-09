@@ -31,8 +31,9 @@ class AddEmployeRepository {
           "uid": uid,
           "createdAt": DateTime.now().toIso8601String(),
         });
+
+        await userCredential.user!.sendEmailVerification();
       }
-      print(userCredential);
     } on auth.FirebaseAuthException catch (e) {
       errorMessage = e.message!;
       if (e.code == 'weak-password') {
