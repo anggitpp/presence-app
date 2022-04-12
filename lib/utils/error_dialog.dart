@@ -18,10 +18,6 @@ void errorDialog(BuildContext context, CustomError e) {
               child: const Text('OK'),
               onPressed: () => Navigator.pop(context),
             ),
-            CupertinoDialogAction(
-              child: const Text('OK'),
-              onPressed: () => Navigator.pop(context),
-            ),
           ],
         );
       },

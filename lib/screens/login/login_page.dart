@@ -44,7 +44,11 @@ class _LoginPageState extends State<LoginPage> {
             errorDialog(context, state.error);
           }
           if (state.loginStatus == LoginStatus.success) {
-            Navigator.pushReplacementNamed(context, Routes.home);
+            if (_password == 'password') {
+              Navigator.pushReplacementNamed(context, Routes.newPassword);
+            } else {
+              Navigator.pushReplacementNamed(context, Routes.home);
+            }
           }
           if (state.loginStatus == LoginStatus.unverified) {
             verificationDialog(context, state.userCredential!);

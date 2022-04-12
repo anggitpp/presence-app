@@ -27,7 +27,6 @@ void verificationDialog(BuildContext context, UserCredential user) {
                 context
                     .read<LoginBloc>()
                     .add(VerificationEmailEvent(userCredential: user));
-
                 Navigator.pop(context);
               },
               child: const Text("Kirim Ulang"),

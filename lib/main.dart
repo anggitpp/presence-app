@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:presence_app/repositories/login_repository.dart';
+import 'package:presence_app/screens/new_password/new_password_page.dart';
 import 'blocs/blocs.dart';
 import 'firebase_options.dart';
 
@@ -43,6 +43,12 @@ class MyApp extends StatelessWidget {
             firebaseAuth: FirebaseAuth.instance,
           ),
         ),
+        RepositoryProvider(
+          create: (context) => NewPasswordRepository(
+            firebaseFirestore: FirebaseFirestore.instance,
+            firebaseAuth: FirebaseAuth.instance,
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -56,6 +62,11 @@ class MyApp extends StatelessWidget {
               loginRepository: context.read<LoginRepository>(),
             ),
           ),
+          BlocProvider<NewPasswordCubit>(
+            create: (context) => NewPasswordCubit(
+              newPasswordRepository: context.read<NewPasswordRepository>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           title: 'Presence App',
@@ -66,6 +77,7 @@ class MyApp extends StatelessWidget {
           routes: {
             Routes.home: (context) => const HomePage(),
             Routes.login: (context) => const LoginPage(),
+            Routes.newPassword: (context) => const NewPasswordPage(),
             Routes.addEmployee: (context) => const AddEmployeePage(),
           },
         ),
