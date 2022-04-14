@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/custom_error.dart';
 
@@ -14,10 +15,16 @@ class LoginRepository {
   Future<auth.UserCredential> login(
       {required String email, required String password}) async {
     String errorMessage = '';
+    final pref = await SharedPreferences.getInstance();
 
     try {
       auth.UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
+
+      //SAVE TO LOCAL
+      await pref.setString('userPassword', password);
+      await pref.setString('userEmail', email);
+
       return userCredential;
     } on auth.FirebaseAuthException catch (e) {
       errorMessage = e.message!;

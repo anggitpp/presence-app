@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:presence_app/config/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/custom_error.dart';
 
@@ -17,7 +18,9 @@ class AddEmployeRepository {
       required String name,
       required String email}) async {
     String errorMessage = '';
-
+    final pref = await SharedPreferences.getInstance();
+    String? userPassword = pref.getString('userPassword');
+    String? userEmail = pref.getString('userEmail');
     try {
       auth.UserCredential userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: "password");
@@ -33,6 +36,13 @@ class AddEmployeRepository {
         });
 
         await userCredential.user!.sendEmailVerification();
+
+        //LOGOUT USER YANG BARU DI BUAT
+        await firebaseAuth.signOut();
+
+        //LOGIN ULANG SI PEMBUAT
+        await firebaseAuth.signInWithEmailAndPassword(
+            email: userEmail!, password: userPassword!);
       }
     } on auth.FirebaseAuthException catch (e) {
       errorMessage = e.message!;
